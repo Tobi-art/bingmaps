@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id='move'>goToCurrentLocation</button>
+    <div id="myMap" style='position:relative;width:100%;height:800px;'></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=' async defer></script>
+    <script>
+        let map;
+
+        function GetMap() {
+            map = new Microsoft.Maps.Map('#myMap', {
+                center: new Microsoft.Maps.Location(35.659785, 139.745305),
+                mapTypeId: Microsoft.Maps.MapTypeId.birdseye,
+                zoom: 17
+            });
+        }
+
+        function movePosition(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            map = new Microsoft.Maps.Map('#myMap', {
+                center: new Microsoft.Maps.Location(lat, lon),
+                mapTypeId: Microsoft.Maps.MapTypeId.birdseye,
+                zoom: 16
+            });
+        };
+
+
+        function mapsError(error) {
+            alert(error.message)
+        };
+
+        const set = {
+            enableHighAccuracy: true,
+            maximumAge: 20000,
+            timeout: 10000
+        };
+
+        document.getElementById("move").onclick = function() {
+            navigator.geolocation.getCurrentPosition(movePosition, mapsError, set);
+        }
+    </script>
+
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+<body>
+    <div id="bingMap" style='position:relative;width:100%;height: 600px;'></div>
+
+    <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=' async defer></script>
+    <script>
+        function GetMap() {
+            let map = new Microsoft.Maps.Map('#bingMap', {
+                center: new Microsoft.Maps.Location(47.6149, -122.1941),
+                zoom: 15
+            });
+            let center = map.getCenter();
+
+            let infobox = new Microsoft.Maps.Infobox(center, {
+                title: 'Microsoft',
+                description: 'This is the center of the map.',
+                showPointer: true,
+                showCloseButton: false,
+                actions: [{
+                    label: 'TokyoTower',
+                    eventHandler: function() {
+                        map.setView({
+                            mapTypeId: Microsoft.Maps.MapTypeId.birdseye,
+                            center: new Microsoft.Maps.Location(35.65876195920759, 139.74548018770867),
+                            zoom: 16
+                        });
+                    }
+                }, {
+                    label: 'OsakaCastle',
+                    eventHandler: function() {
+                        map.setView({
+                            mapTypeId: Microsoft.Maps.MapTypeId.birdseye,
+                            center: new Microsoft.Maps.Location(34.68744796633962, 135.52597159098414),
+                            zoom: 15
+                        });
+                    }
+                }]
+            });
+            //add infobox to map
+            infobox.setMap(map);
+        }
+    </script>
+</body>
+
+</html>

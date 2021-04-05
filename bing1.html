@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="bingMap" style='width:100%;height:100%;'></div>
+
+    <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=' async defer></script>
+
+
+    <script>
+        function mapsInit(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const map = new Microsoft.Maps.Map('#bingMap', {
+                center: new Microsoft.Maps.Location(lat, lon), //Location center position
+                mapTypeId: Microsoft.Maps.MapTypeId.load, //other types: aerial - canvasDark - canvasLight - birdseye - grayscale - streetside
+                zoom: 17 //Zoom:1=zoomOut, 20=zoomUp[ 1~20 ]
+            });
+        };
+
+        function mapsError(error) {
+            alert(error.message)
+        };
+
+        const set = {
+            enableHighAccuracy: true,
+            maximumAge: 20000,
+            timeout: 10000
+        };
+
+        function GetMap() {
+            navigator.geolocation.getCurrentPosition(mapsInit, mapsError, set);
+        }
+    </script>
+</body>
+
+</html>
