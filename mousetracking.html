@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="bingMap" style="height: 500px; width: 100%"></div>
+
+
+    <script src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=' async defer></script>
+    <script>
+        let map;
+
+        function GetMap() {
+            map = new Microsoft.Maps.Map('#bingMap', {
+                center: new Microsoft.Maps.Location(47.6149, -122.1941),
+            });
+            Microsoft.Maps.Events.addHandler(map, 'click', function(e) {
+                var point = new Microsoft.Maps.Point(e.getX(), e.getY());
+                var locTemp = e.target.tryPixelToLocation(point);
+                var location = new Microsoft.Maps.Location(locTemp.latitude, locTemp.longitude);
+                let pin = new Microsoft.Maps.Pushpin(location, {
+                    color: 'darkred'
+                });
+                map.entities.push(pin);
+            }); //function(e)
+        }; //GetMap
+    </script>
+</body>
+
+</html>
